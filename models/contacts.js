@@ -21,7 +21,6 @@ const getContactById = async (contactId) => {
     return { type: "error", body: err.msg };
   }
 };
-
 const removeContact = async (contactId) => {
   try {
     const dataFromDB = await fs.readFile("./models/contacts.json");

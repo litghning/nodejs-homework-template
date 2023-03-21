@@ -17,7 +17,7 @@ const validateContact = async (req, res, next) => {
     const { error,value } = contactSchema.validate(req.body);
     if (error) {
         console.log(error.label)
-      res.status(400).json({ message: error.details[0].message });
+      res.status(400).json({ message: "missing required name field" });
       return;
     }
     req.body = value;
