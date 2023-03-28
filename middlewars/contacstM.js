@@ -1,4 +1,9 @@
 const Joi = require("joi");
+const { catchAsync } = require("..//async/catchAsync");
+const Contact = require("../models/contacts");
+const {
+  Types: { ObjectId },
+} = require("mongoose");
 
 const contactSchema = Joi.object({
   name: Joi.string().required().messages({
@@ -30,6 +35,20 @@ const validateContact = async (req, res, next) => {
     next();
   };
 
+  const checkContactId = catchAsync(async (req, res, next) => {
+    const { contactId } = req.params;
+
+    if (!ObjectId.isValid(contactId)) {
+      return res.status(400).json({ message: "Invalid Contact id.." });
+    }
+  
+    const contactExists = await Contact.exists({ _id: contactId });
+  
+    if (!contactExists)
+      return res.status(404).json({ message: "Contact not found.." });
+    next();
+  });
   module.exports = {
-    validateContact
+    validateContact,
+    checkContactId,
   };
