@@ -6,19 +6,22 @@ const {
   createContact,
   changeContact,
   deleteContact,
+  updateStatusContact,
 } = require("../../controler/controler");
-const { validateContact } = require("../../middlewars/contacstM");
+const { validateContact, checkContactId } = require("../../middlewars/contacstM");
 
 const router = express.Router();
 
 router.get('/', getlistContacts);
 
-router.get('/:contactId', getContact);
+router.get('/:contactId', checkContactId, getContact);
 
 router.post('/', validateContact, createContact);
 
-router.delete('/:contactId', deleteContact);
+router.delete('/:contactId', checkContactId, deleteContact);
 
-router.put('/:contactId', changeContact);
+router.put('/:contactId', checkContactId, changeContact);
+
+router.patch("/:contactId/favorite",checkContactId, updateStatusContact);
 
 module.exports = router
