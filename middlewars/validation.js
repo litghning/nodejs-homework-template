@@ -3,10 +3,8 @@ const validation = (schema) => {
     const { error } = schema.validate(req.body);
 
     if (error) {
-      error.status = 400;
-      error.message = "missing required name field";
-
-      next(error);
+      res.status(400).json({ message: error.details[0].message });
+      return;
     }
     next();
   };

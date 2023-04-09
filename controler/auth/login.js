@@ -14,7 +14,12 @@ const login = async (req, res) => {
   };
   const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: "1d" });
   const logedUser = await User.findByIdAndUpdate(user._id, { token });
-  res.status(200).json(logedUser);
+  res.status(200).json({
+    "token": token,
+    "user": {
+      "email": logedUser.email,
+      "subscription": logedUser.password
+    }});
 };
 
 module.exports = login;

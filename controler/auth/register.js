@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../../models");
 const { CreateError } = require("../../helpers");
 
-const singup = async (req, res) => {
+const register = async (req, res) => {
   const { email, password } = req.body;
   const findedUser = await User.findOne({ email });
   if (findedUser) {
@@ -12,7 +12,12 @@ const singup = async (req, res) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const user = await User.create({ ...req.body, password: hashPassword });
 
-  res.status(201).json(user);
+  res.status(201).json({
+    "user": {
+        "email": `${user.email}`,
+        "subscription": `${user.subscription}`
+    }
+});
 };
 
-module.exports = singup;
+module.exports = register;

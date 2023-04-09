@@ -8,7 +8,7 @@ const validationMidleware = validation(userSchemaJoi.addUserSchemaJoi);
 
 const router = express.Router();
 
-router.post("/singup", validationMidleware, ctrlWrapper(ctrl.singup));
+router.post("/register", validationMidleware, ctrlWrapper(ctrl.register));
 
 router.post("/login", validationMidleware, ctrlWrapper(ctrl.login));
 
