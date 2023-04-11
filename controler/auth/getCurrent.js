@@ -1,7 +1,8 @@
 const { User } = require("../../models");
 const { CreateError } = require("../../helpers");
+const { ctrlWrapper } = require("../../middlewars");
 
-const getCurrent = async (req, res) => {
+let getCurrent = async (req, res) => {
   const { id } = req.user;
   const user = await User.findById(id);
   if (!user) {
@@ -11,4 +12,5 @@ const getCurrent = async (req, res) => {
   res.status(200).json(showedDataUser);
 };
 
+getCurrent = ctrlWrapper(getCurrent);
 module.exports = getCurrent;

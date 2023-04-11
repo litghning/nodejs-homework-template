@@ -8,6 +8,7 @@ const addUserSchemaJoi = Joi.object({
     })
     .required(),
   subscription: Joi.string(),
+  avatarURL: Joi.string(),
   token: Joi.string(),
 });
 
