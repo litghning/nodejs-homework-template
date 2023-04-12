@@ -6,4 +6,4 @@ const handleSchemaErrorValidation = (error, data, next) => {
   next();
 };
 
-module.exports = { handleSchemaErrorValidation };
+module.exports =  handleSchemaErrorValidation ;

@@ -2,25 +2,32 @@ const express = require("express");
 const { auth: ctrl } = require("../../controler");
 const { userSchemaJoi } = require("../../models");
 
-const { validation, ctrlWrapper, authMiddleware } = require("../../middlewars");
+const { validation, authMiddleware, uploadMiddleware, } = require("../../middlewars");
 
 const validationMidleware = validation(userSchemaJoi.addUserSchemaJoi);
 
 const router = express.Router();
 
-router.post("/register", validationMidleware, ctrlWrapper(ctrl.register));
+router.post("/register", validationMidleware, ctrl.register);
 
-router.post("/login", validationMidleware, ctrlWrapper(ctrl.login));
+router.post("/login", validationMidleware, ctrl.login);
 
-router.post("/logout", authMiddleware, ctrlWrapper(ctrl.logout));
+router.post("/logout", authMiddleware, ctrl.logout);
 
-router.get("/current", authMiddleware, ctrlWrapper(ctrl.getCurrent));
+router.get("/current", authMiddleware, ctrl.getCurrent);
 
 router.patch(
   "/",
   authMiddleware,
   validation(userSchemaJoi.userSubscriptionSchemaJoi),
-  ctrlWrapper(ctrl.updateSubscription)
+  ctrl.updateSubscription
+  );
+ 
+  router.patch(
+    "/avatars",
+    authMiddleware,
+    uploadMiddleware.single("avatar"),
+    ctrl.updateAvatar
 );
 
 module.exports = router;

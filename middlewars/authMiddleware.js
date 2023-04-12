@@ -7,7 +7,7 @@ const authMiddleware = (req, res, next) => {
     if (!token || bearer !== "Bearer") {
       throw new CreateError(401, "Not authorized");
     }
-    const user = jwt.verify(token, process.env.SECRET_KEY);
+    const user = jwt.verify(token, process.env.JWT_KEY);
 
     req.user = user;
     next();
@@ -19,4 +19,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = { authMiddleware };
+module.exports =  authMiddleware ;

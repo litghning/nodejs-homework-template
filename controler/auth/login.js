@@ -1,11 +1,11 @@
 const { User } = require("../../models");
 const { CreateError } = require("../../helpers");
 const jwt = require("jsonwebtoken");
+const { ctrlWrapper } = require("../../middlewars");
 
-const login = async (req, res) => {
+let login = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  console.log(User);
   if (!user || !user.comparePassword(password)) {
     throw new CreateError(401, "Email or password is wrong");
   }
@@ -21,5 +21,5 @@ const login = async (req, res) => {
       "subscription": logedUser.password
     }});
 };
-
+ogin = ctrlWrapper(login);
 module.exports = login;
