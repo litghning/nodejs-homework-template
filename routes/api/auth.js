@@ -32,7 +32,7 @@ router.patch(
 router.get("/verify/:verificationToken", ctrl.verificationEmail);
 
  router.post(
-   "./verify",
+   "/verify",
    validation(userSchemaJoi.userEmailVerificationSchemaJoi),
    ctrl.resendValidationEmail
  );
