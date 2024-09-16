@@ -6,8 +6,8 @@ const { ctrlWrapper } = require("../../middlewars");
 let login = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !user.comparePassword(password)) {
-    throw new CreateError(401, "Email or password is wrong");
+  if (!user || !user.verify || !user.comparePassword(password)) {
+    throw new CreateError(401, "Email or password is wrong or not verify");
   }
   const payload = {
     id: user._id,
@@ -21,5 +21,5 @@ let login = async (req, res, next) => {
       "subscription": logedUser.password
     }});
 };
-ogin = ctrlWrapper(login);
+login = ctrlWrapper(login);
 module.exports = login;
